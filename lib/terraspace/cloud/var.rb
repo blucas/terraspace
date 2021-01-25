@@ -12,26 +12,14 @@ module Terraspace::Cloud
       vars = api.list_vars(@options)
       return unless vars # 500 error
 
-      if vars.key?("errors") # not authorized
+      if errors?(vars)
         error_message(vars)
       else
-        list_variables
+        show_variables(vars)
       end
     end
 
-    def error_message(vars)
-      vars["errors"].each do |error|
-        case error["message"]
-        when /Forbidden/
-          $stderr.puts "You are not authorized to see these variables. Double check your token and permissions."
-        when /Not Found/
-          $stderr.puts "The variable was not found. Double check the variable."
-        end
-      end
-      $stderr.puts "Your current org #{@options[:org]} project #{@options[:project]}"
-    end
-
-    def list_variables
+    def show_variables(vars)
       presenter = CliFormat::Presenter.new(@options)
       presenter.header = %w[Name Value Kind Sensitive]
       vars.each do |var|
@@ -45,6 +33,22 @@ module Terraspace::Cloud
       else
         presenter.show
       end
+    end
+
+    def errors?(vars)
+      vars.is_a?(Hash) && vars.key?("errors")
+    end
+
+    def error_message(vars)
+      vars["errors"].each do |error|
+        case error["message"]
+        when /Forbidden/
+          $stderr.puts "You are not authorized to see these variables. Double check your token and permissions."
+        when /Not Found/
+          $stderr.puts "The variable was not found. Double check the variable."
+        end
+      end
+      $stderr.puts "Your current org #{@options[:org]} project #{@options[:project]}"
     end
   end
 end
