@@ -19,9 +19,9 @@ class Terraspace::Cloud::Api
         req.content_length = text.bytesize
       end
 
-      puts "build_request klass: #{klass}"
-      puts "build_request url: #{url}"
-      puts "build_request data: #{data}"
+      # puts "build_request klass: #{klass}"
+      # puts "build_request url: #{url}"
+      # puts "build_request data: #{data}"
 
       req
     end
@@ -37,6 +37,10 @@ class Terraspace::Cloud::Api
 
     def load_json(url, res)
       uri = URI(url)
+
+      # puts "res.code #{res.code}"
+      # puts "res.body #{res.body}" # {"errors":[{"message":"403 Forbidden"}]}
+
       if ok?(res.code)
         JSON.load(res.body)
       else
