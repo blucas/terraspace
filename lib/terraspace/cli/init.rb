@@ -4,7 +4,7 @@ class Terraspace::CLI
   class Init < Base
     def initialize(options={})
       # Original calling command. Can be from Commander which is a terraform command. IE: terraform apply
-      # Or can be from terraspace tfc  setup. Which will be cloud-setup.
+      # Or can be from terraspace tfc setup. Which will be cloud-setup.
       @calling_command = options[:calling_command]
       super(options)
     end
