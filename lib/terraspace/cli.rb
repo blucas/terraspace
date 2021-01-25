@@ -36,6 +36,10 @@ module Terraspace
     long_desc Help.text(:clean)
     subcommand "clean", Clean
 
+    desc "cloud SUBCOMMAND", "cloud subcommands"
+    long_desc Help.text(:cloud)
+    subcommand "cloud", Cloud
+
     desc "tfc SUBCOMMAND", "tfc subcommands"
     long_desc Help.text(:tfc)
     subcommand "tfc", Tfc
