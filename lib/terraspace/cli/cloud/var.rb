@@ -1,10 +1,11 @@
 class Terraspace::CLI::Cloud
   class Var < Terraspace::Command
     Help = Terraspace::CLI::Help
-    Var = Terraspace::Terraform::Cloud::Var
+    Var = Terraspace::Cloud::Var
 
     desc "list", "List variables."
     long_desc Help.text("cloud:var:list")
+    option :format, desc: "Output formats: #{CliFormat.formats.join(', ')}"
     def list
       Var.new(options).list
     end
