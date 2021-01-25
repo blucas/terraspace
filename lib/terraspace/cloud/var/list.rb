@@ -2,6 +2,8 @@ module Terraspace::Cloud::Var
   class List < Base
     def run
       return unless valid?
+
+      $stderr.puts "Showing #{@options[:type]}-level variables for #{@options[:org]}/#{@options[:project]}:"
       vars = api.list_vars(@options)
       return unless vars # 500 error
 
@@ -20,7 +22,6 @@ module Terraspace::Cloud::Var
         presenter.rows << row
       end
 
-      $stderr.puts "Showing #{@options[:type]}-level variables for #{@options[:org]}/#{@options[:project]}:"
       if presenter.rows.empty?
         $stderr.puts "No variables were found"
       else

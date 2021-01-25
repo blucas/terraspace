@@ -15,8 +15,12 @@ module Terraspace::Cloud
 
     def set_var(options={})
       data = translate_keys(options)
-      # puts "data #{data}"
       put("vars/#{options[:name]}", data)
+    end
+
+    def rm_var(options={})
+      data = translate_keys(options)
+      delete("vars/#{options[:name]}", data)
     end
 
     def translate_keys(options)

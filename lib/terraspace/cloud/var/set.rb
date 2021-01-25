@@ -3,6 +3,7 @@ module Terraspace::Cloud::Var
     def run
       return unless valid?
 
+      $stderr.puts "Setting #{@options[:type]}-level variables for #{@options[:org]}/#{@options[:project]}:"
       result = api.set_var(@options)
       return unless result # 500 error
 
@@ -14,7 +15,6 @@ module Terraspace::Cloud::Var
     end
 
     def show_result(result)
-      $stderr.puts "Setting #{@options[:type]}-level variables for #{@options[:org]}/#{@options[:project]}:"
       $stderr.puts "Variable #{@options[:name]} has been set"
       view = case @options[:type]
       when "org", "project"
