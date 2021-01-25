@@ -3,7 +3,9 @@ module Terraspace::Cloud
     include Terraspace::Cloud::Api::Concern
     def initialize(options={})
       @options = options
-      @options[:project] = Terraspace.project_name
+      cloud = Terraspace.config.cloud
+      @options[:org] = cloud.org
+      @options[:project] = cloud.project
     end
 
     def list
