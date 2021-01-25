@@ -1,4 +1,4 @@
-module Terraspace::Terraform::Cloud
+module Terraspace::Terraform::Tfc
   class Workspace < Terraspace::CLI::Base
     extend Memoist
     include Terraspace::Util::Logging

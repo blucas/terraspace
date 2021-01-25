@@ -1,4 +1,4 @@
-module Terraspace::Terraform::Cloud
+module Terraspace::Terraform::Tfc
   class Sync < Terraspace::CLI::Base
     extend Memoist
     include Terraspace::Terraform::Api::Client
