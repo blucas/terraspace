@@ -79,6 +79,10 @@ class Terraspace::Cloud::Api
       request(Net::HTTP::Post, path, data)
     end
 
+    def put(path, data={})
+      request(Net::HTTP::Put, path, data)
+    end
+
     def patch(path, data={})
       request(Net::HTTP::Patch, path, data)
     end

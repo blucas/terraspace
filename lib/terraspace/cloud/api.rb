@@ -13,6 +13,12 @@ module Terraspace::Cloud
       get("vars?#{query_string}")
     end
 
+    def set_var(options={})
+      data = translate_keys(options)
+      # puts "data #{data}"
+      put("vars/#{options[:name]}", data)
+    end
+
     def translate_keys(options)
       options.transform_keys do |key|
         map = {
