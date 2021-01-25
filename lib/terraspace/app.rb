@@ -46,6 +46,7 @@ module Terraspace
       config.logger = ts_logger
       config.logger.formatter = Logger::Formatter.new
       config.logger.level = ENV['TS_LOG_LEVEL'] || :info
+      config.project_name = "main"
       config.terraform = ActiveSupport::OrderedOptions.new
       config.terraform.plugin_cache = ActiveSupport::OrderedOptions.new
       config.terraform.plugin_cache.dir = ENV['TF_PLUGIN_CACHE_DIR'] || "#{Terraspace.tmp_root}/plugin_cache"

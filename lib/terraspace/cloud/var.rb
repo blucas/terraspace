@@ -3,10 +3,11 @@ module Terraspace::Cloud
     include Terraspace::Cloud::Api::Concern
     def initialize(options={})
       @options = options
+      @options[:project] = Terraspace.project_name
     end
 
     def list
-      vars = api.list_vars
+      vars = api.list_vars(@options)
       return unless vars # nil if not authorized
       presenter = CliFormat::Presenter.new(@options)
       presenter.header = %w[Name Value Kind Sensitive]

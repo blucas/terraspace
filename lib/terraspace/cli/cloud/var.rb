@@ -6,6 +6,9 @@ class Terraspace::CLI::Cloud
     desc "list", "List variables."
     long_desc Help.text("cloud:var:list")
     option :format, desc: "Output formats: #{CliFormat.formats.join(', ')}"
+    option :type, aliases: %w[t], default: "project", desc: "Variable type: stack, env, project, or org"
+    option :env, desc: "Stack name. Only use when type is env"
+    option :stack, desc: "Stack name. Only use when type is stack"
     def list
       Var.new(options).list
     end

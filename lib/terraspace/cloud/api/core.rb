@@ -18,6 +18,11 @@ class Terraspace::Cloud::Api
         req.body = text
         req.content_length = text.bytesize
       end
+
+      puts "build_request klass: #{klass}"
+      puts "build_request url: #{url}"
+      puts "build_request data: #{data}"
+
       req
     end
 

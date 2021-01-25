@@ -2,6 +2,10 @@ module Terraspace
   module Core
     extend Memoist
 
+    def project_name
+      config.project_name
+    end
+
     def env
       ENV['TS_ENV'] || "dev"
     end
