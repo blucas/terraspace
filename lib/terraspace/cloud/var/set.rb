@@ -3,7 +3,7 @@ module Terraspace::Cloud::Var
     def run
       return unless valid?
 
-      $stderr.puts "Setting #{@options[:type]}-level variables for #{@options[:org]}/#{@options[:project]}:"
+      $stderr.puts "Setting #{@options[:type]} level variables for #{@options[:org]}/#{@options[:project]}:"
       result = api.set_var(@options)
       return unless result # 500 error
 
@@ -19,10 +19,10 @@ module Terraspace::Cloud::Var
       view = case @options[:type]
       when "org", "project"
         "terraspace cloud var list --type #{@options[:type]}"
-      when "stack"
-        "terraspace cloud var list --type #{@options[:type]} --stack=#{@options[:stack]}"
       when "env"
         "terraspace cloud var list --type #{@options[:type]} --env=#{@options[:env]}"
+      when "stack", "stack_env"
+        "terraspace cloud var list --type #{@options[:type]} --stack=#{@options[:stack]}"
       end
       $stderr.puts <<~EOL
         To view variable:

@@ -29,7 +29,10 @@ module Terraspace::Cloud::Var
     end
 
     def valid?
-      if @options[:type] == "stack" && !@options[:stack]
+      if @options[:type] == "stack_env" && !@options[:stack]
+        puts "ERROR: When using --type stack_env, please specify the env. IE: --stack NAME"
+        return false
+      elsif @options[:type] == "stack" && !@options[:stack]
         puts "ERROR: When using --type stack, please specify the env. IE: --stack NAME"
         return false
       elsif @options[:type] == "env" && @options[:stack] # in case user accidentally specifies stack. env is inferred

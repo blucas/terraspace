@@ -3,7 +3,7 @@ module Terraspace::Cloud::Var
     def run
       return unless valid?
 
-      $stderr.puts "Removing #{@options[:type]}-level variables for #{@options[:org]}/#{@options[:project]}:"
+      $stderr.puts "Removing #{@options[:type]} level variables for #{@options[:org]}/#{@options[:project]}:"
       result = api.rm_var(@options)
       return unless result # 500 error
 
