@@ -13,7 +13,7 @@ class Terraspace::CLI::Cloud
     end
 
     desc "list", "List variables."
-    long_desc Help.text("cloud/var/list")
+    long_desc Help.text("cloud:var:list")
     option :format, desc: "Output formats: #{CliFormat.formats.join(', ')}"
     option :kind, aliases: %w[k], default: nil, desc: "Kind: environment or terraform"
     def list
