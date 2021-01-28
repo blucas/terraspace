@@ -24,7 +24,7 @@ class Terraspace::Terraform::Api
 
     def working_directory
       cache_dir = @mod.cache_dir.sub("#{Terraspace.root}/", '')
-      prefix = Terraspace.config.cloud.working_dir_prefix # prepended to TFC Working Directory
+      prefix = Terraspace.config.tfc.working_dir_prefix # prepended to TFC Working Directory
       prefix ? "#{prefix}/#{cache_dir}" : cache_dir
     end
 
@@ -81,7 +81,7 @@ class Terraspace::Terraform::Api
 
     def attributes
       attrs = { name: @name }
-      config = Terraspace.config.cloud.workspace.attrs
+      config = Terraspace.config.tfc.workspace.attrs
       attrs.merge!(config)
       # Default: run on all changes since app/modules can affect app/stacks
       if config['vcs-repo'] && config['file-triggers-enabled'].nil?

@@ -16,7 +16,7 @@ module Terraspace::Terraform::Tfc
     # So we check and create the workspace if necessary.
     def run
       # Note: workspace still gets created by `terraform init` However, variables wont be sync if returns early
-      return unless Terraspace.config.cloud.auto_sync || @options[:override_auto_sync]
+      return unless Terraspace.config.tfc.auto_sync || @options[:override_auto_sync]
       return unless workspaces_backend?
       logger.info "Syncing to Terraform Cloud: #{@mod.name} => #{workspace_name}"
       @api = Terraspace::Terraform::Api.new(@mod, remote)
