@@ -38,13 +38,20 @@ class Terraspace::Terraform::Api
       #
       #     terraspace up demo --no-init
       #
-      unless payload || options[:exit_on_fail] == false
+      exit_on_fail = options[:exit_on_fail].nil? ? true : options[:exit_on_fail]
+      if exit_on_fail && not_found_error?(payload)
         logger.error "ERROR: Unable to find the workspace: #{@name}. The workspace may not exist. Or the Terraform token may be invalid. Please double check your Terraform token.".color(:red)
         exit 1
       end
       payload['data'] if payload
     end
     memoize :details
+
+    def not_found_error?(payload)
+      return true unless payload
+      return false unless payload.key?('errors')
+      payload['errors'][0]['status'] == '404'
+    end
 
     def destroy
       # response payload from delete operation is nil
