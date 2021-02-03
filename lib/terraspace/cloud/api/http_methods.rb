@@ -1,6 +1,7 @@
 class Terraspace::Cloud::Api
   module HttpMethods
     extend Memoist
+    include Terraspace::Util
 
     # Always translate raw json response to ruby Hash
     def request(klass, path, data={})
@@ -15,13 +16,15 @@ class Terraspace::Cloud::Api
       set_headers!(req)
       if [Net::HTTP::Delete, Net::HTTP::Patch, Net::HTTP::Post, Net::HTTP::Put].include?(klass)
         text = JSON.dump(data)
+        # puts "JSON.dump data:".color(:yellow)
+        # pp data
         req.body = text
         req.content_length = text.bytesize
       end
 
-      # puts "build_request klass: #{klass}"
-      # puts "build_request url: #{url}"
-      # puts "build_request data: #{data}"
+      logger.info "API klass: #{klass}"
+      logger.info "API url: #{url}"
+      logger.info "API data: #{data}"
 
       req
     end
@@ -45,6 +48,7 @@ class Terraspace::Cloud::Api
         JSON.load(res.body)
       else
         puts "Error: Non-successful http response status code: #{res.code}"
+        puts "Error: Non-successful http response body: #{res.body}"
         puts "headers: #{res.each_header.to_h.inspect}"
         puts "Terraspace Cloud API #{url}"
         raise "Terraspace Cloud API called failed: #{uri.host}"

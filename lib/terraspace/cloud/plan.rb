@@ -2,8 +2,9 @@ module Terraspace::Cloud
   class Plan < AbstractBase
     def run
       zip_path = package_project
-      url = get_presigned_url
-      upload(url, zip_path)
+      uploader = Project::Uploader.new(@options)
+      uploader.upload(zip_path)
+      start_plan(uploader.record)
     end
 
     def package_project
@@ -12,14 +13,9 @@ module Terraspace::Cloud
       package.path
     end
 
-    def get_presigned_url
-      url = Project::Url.new(@options)
-      url.presigned_url
-    end
-
-    def upload(url, zip_path)
-      upload = Project::Upload.new(@options)
-      upload.upload(url, zip_path)
+    def start_plan(upload)
+      result = api.start_plan(upload_id: upload['uid'])
+      puts "start_plan result #{result}"
     end
   end
 end

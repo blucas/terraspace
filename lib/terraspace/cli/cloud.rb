@@ -4,10 +4,6 @@ class Terraspace::CLI
     long_desc Help.text(:var)
     subcommand "var", Var
 
-    desc "project SUBCOMMAND", "project subcommands"
-    long_desc Help.text(:project)
-    subcommand "project", Project
-
     desc "plan", "Runs plan on the cloud"
     long_desc Help.text("cloud/plan")
     def plan(stack)

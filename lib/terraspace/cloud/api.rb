@@ -17,8 +17,16 @@ module Terraspace::Cloud
       "orgs/#{@org}/projects/#{@project}"
     end
 
-    def create_upload(options={})
-      post("#{project_path}/uploads")
+    def deployment_path
+      "#{project_path}/stacks/#{@stack}/envs/#{@env}"
+    end
+
+    def create_upload
+      post("#{deployment_path}/uploads")
+    end
+
+    def start_plan(record)
+      post("#{deployment_path}/plans", record)
     end
 
     def list_vars(options={})
