@@ -1,15 +1,5 @@
 module Terraspace::Cloud::Var
-  class Base
-    include Terraspace::Cloud::Api::Concern
-
-    def initialize(options={})
-      @options = options
-      cloud = Terraspace.config.cloud
-      @options[:org] = cloud.org
-      @options[:project] = cloud.project
-      @options[:env] ||= Terraspace.env
-    end
-
+  class Base < Terraspace::Cloud::AbstractBase
     def errors?(result)
       result.is_a?(Hash) && result.key?("errors")
     end
