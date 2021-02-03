@@ -1,5 +1,5 @@
 class Terraspace::Cloud::Api
-  module Core
+  module HttpMethods
     extend Memoist
 
     # Always translate raw json response to ruby Hash
@@ -41,7 +41,7 @@ class Terraspace::Cloud::Api
       # puts "res.code #{res.code}"
       # puts "res.body #{res.body}" # {"errors":[{"message":"403 Forbidden"}]}
 
-      if ok?(res.code)
+      if parseable?(res.code)
         JSON.load(res.body)
       else
         puts "Error: Non-successful http response status code: #{res.code}"
@@ -53,7 +53,7 @@ class Terraspace::Cloud::Api
 
     # Note: 422 is Unprocessable Entity. This means an invalid data payload was sent.
     # We want that to error and raise
-    def ok?(http_code)
+    def parseable?(http_code)
       http_code =~ /^20/ || http_code =~ /^40/
     end
 

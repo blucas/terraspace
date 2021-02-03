@@ -1,15 +1,14 @@
 module Terraspace::Cloud
   class AbstractBase
-    include Terraspace::Cloud::Api::Concern
+    include Api::Concern
+    include Context
     include Terraspace::Util
+    include Errors
+    include Validations
 
     def initialize(options={})
       @options = options
-      cloud = Terraspace.config.cloud
-      @org = @options[:org] = cloud.org
-      @project = @options[:project] = cloud.project
-      @env = @options[:env] ||= Terraspace.env
-      @stack = @options[:stack]
+      setup_context(options)
     end
   end
 end
