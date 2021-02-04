@@ -7,7 +7,7 @@ module Terraspace::Cloud::Project
       logger.debug "Building terraspace project package"
       copy
       tidy
-      logger.debug "Built terraspace project package in #{pretty_path(project_cache)}"
+      logger.debug "Copied terraspace project to #{pretty_path(project_cache)}"
       zip(project_cache)
       logger.info "Built terraspace project package in #{pretty_path(path)}"
     end
