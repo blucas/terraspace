@@ -8,9 +8,7 @@ module Terraspace::Cloud
     end
 
     def package_project
-      package = Project::Package.new(@options)
-      package.build
-      package.path
+      Project::Package.new(@options).build # returns zip_path
     end
 
     def start_plan(upload)
