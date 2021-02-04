@@ -5,7 +5,7 @@ module Terraspace
     def initialize(*args)
       super
       self.formatter = Formatter.new
-      self.level = :info
+      self.level = ENV['TS_LOG_LEVEL'] || :info # note: only respected when config.logger not set in config/app.rb
     end
 
     def format_message(severity, datetime, progname, msg)

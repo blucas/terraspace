@@ -16,15 +16,13 @@ class Terraspace::Cloud::Api
       set_headers!(req)
       if [Net::HTTP::Delete, Net::HTTP::Patch, Net::HTTP::Post, Net::HTTP::Put].include?(klass)
         text = JSON.dump(data)
-        # puts "JSON.dump data:".color(:yellow)
-        # pp data
         req.body = text
         req.content_length = text.bytesize
       end
 
-      logger.info "API klass: #{klass}"
-      logger.info "API url: #{url}"
-      logger.info "API data: #{data}"
+      logger.debug "API klass: #{klass}"
+      logger.debug "API url: #{url}"
+      logger.debug "API data: #{data}"
 
       req
     end
@@ -38,19 +36,19 @@ class Terraspace::Cloud::Api
       ENV['TERRASPACE_TOKEN'] # || load from yaml
     end
 
-    def load_json(url, res)
+    def load_json(url, resp)
       uri = URI(url)
 
-      # puts "res.code #{res.code}"
-      # puts "res.body #{res.body}" # {"errors":[{"message":"403 Forbidden"}]}
+      logger.debug "resp.code #{resp.code}"
+      logger.debug "resp.body #{resp.body}" # {"errors":[{"message":"403 Forbidden"}]}
 
-      if parseable?(res.code)
-        JSON.load(res.body)
+      if parseable?(resp.code)
+        JSON.load(resp.body)
       else
-        puts "Error: Non-successful http response status code: #{res.code}"
-        puts "Error: Non-successful http response body: #{res.body}"
-        puts "headers: #{res.each_header.to_h.inspect}"
-        puts "Terraspace Cloud API #{url}"
+        logger.error "Error: Non-successful http response status code: #{resp.code}"
+        logger.error "Error: Non-successful http response body: #{resp.body}"
+        logger.error "headers: #{resp.each_header.to_h.inspect}"
+        logger.error "Terraspace Cloud API #{url}"
         raise "Terraspace Cloud API called failed: #{uri.host}"
       end
     end
