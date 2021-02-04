@@ -12,9 +12,15 @@ class Terraspace::Compiler::Strategy::Tfvar
         ]
       end.flatten
 
+      layer_paths << cloud_layer_path
+
       layer_paths.select do |path|
         File.exist?(path)
       end
+    end
+
+    def cloud_layer_path
+      "#{Terraspace.root}/.tsc/cloud.tfvars"
     end
 
     # Layers in order
