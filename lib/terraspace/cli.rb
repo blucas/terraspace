@@ -40,13 +40,13 @@ module Terraspace
     long_desc Help.text(:cloud)
     subcommand "cloud", Cloud
 
-    desc "tfc SUBCOMMAND", "tfc subcommands"
-    long_desc Help.text(:tfc)
-    subcommand "tfc", Tfc
-
     desc "new SUBCOMMAND", "new subcommands"
     long_desc Help.text(:new)
     subcommand "new", New
+
+    desc "tfc SUBCOMMAND", "tfc subcommands"
+    long_desc Help.text(:tfc)
+    subcommand "tfc", Tfc
 
     desc "build [STACK]", "Build project."
     long_desc Help.text(:build)
@@ -171,6 +171,12 @@ module Terraspace
     option :json, type: :boolean, desc: "show plan in json format"
     def show(mod)
       Commander.new("show", options.merge(mod: mod)).run
+    end
+
+    desc "state SUBCOMMAND STACK", "Run state."
+    long_desc Help.text(:state)
+    def state(subcommand, mod)
+      State.new(options.merge(subcommand: subcommand, mod: mod)).run
     end
 
     desc "test", "Run test."

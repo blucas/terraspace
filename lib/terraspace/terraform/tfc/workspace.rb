@@ -21,7 +21,7 @@ module Terraspace::Terraform::Tfc
     end
 
     def init
-      Terraspace::CLI::Init.new(@options.merge(calling_command: "cloud-setup")).run
+      Terraspace::CLI::Init.new(@options).run
     end
 
     def create

@@ -16,5 +16,12 @@ module Terraspace
       end
       line =~ /\n$/ ? line : "#{line}\n"
     end
+
+    # Used to allow terraform output to always go to stdout
+    # Terraspace output goes to stderr by default
+    # See: terraspace/shell.rb
+    def stdout(msg)
+      puts msg
+    end
   end
 end
