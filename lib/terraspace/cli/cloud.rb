@@ -4,6 +4,13 @@ class Terraspace::CLI
     long_desc Help.text(:var)
     subcommand "var", Var
 
+    desc "apply", "Runs apply on the cloud"
+    long_desc Help.text("cloud/apply")
+    option :plan, required: true, desc: "plan id"
+    def apply(stack)
+      Terraspace::Cloud::Apply.new(options.merge(stack: stack)).run
+    end
+
     desc "plan", "Runs plan on the cloud"
     long_desc Help.text("cloud/plan")
     def plan(stack)

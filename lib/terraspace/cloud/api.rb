@@ -29,6 +29,10 @@ module Terraspace::Cloud
       post("#{deployment_path}/plans", record)
     end
 
+    def apply_plan(record)
+      post("#{deployment_path}/applies", record)
+    end
+
     def list_vars(options={})
       query_string = URI.encode_www_form(params)
       get("vars?#{query_string}")

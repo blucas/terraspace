@@ -9,7 +9,7 @@ module Terraspace::Cloud::Project
       tidy
       logger.debug "Copied terraspace project to #{pretty_path(project_folder)}"
       zip
-      logger.info "Built terraspace project package in #{project_zip}"
+      logger.debug "Built terraspace project package in #{project_zip}"
       project_zip # important to return path
     end
 

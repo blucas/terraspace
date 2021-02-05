@@ -6,7 +6,7 @@ class Terraspace::CLI
 
     def run
       build
-      if @options[:yes] && !@options[:plan] && !tfc?
+      if @options[:yes] && !@options[:plan] && !tfc? && !tsc?
         plan
         Commander.new("apply", @options.merge(plan: plan_path)).run
       else
@@ -15,6 +15,10 @@ class Terraspace::CLI
     end
 
   private
+    def tsc?
+      !!ENV['TSC_CI']
+    end
+
     # must build to compute tfc?
     def build
       Terraspace::Builder.new(@options).run
