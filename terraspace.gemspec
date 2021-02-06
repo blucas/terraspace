@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor"
   spec.add_dependency "tty-tree"
   spec.add_dependency "zeitwerk"
+  spec.add_dependency "zip_folder"
 
   # core baseline plugins
   spec.add_dependency "terraspace_plugin_aws", "~> 0.3.0"

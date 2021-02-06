@@ -1,5 +1,4 @@
-require 'zip'
-require 'zip/filesystem'
+require 'zip_folder'
 
 module Terraspace::Cloud::Project
   class Package < Base
@@ -25,7 +24,7 @@ module Terraspace::Cloud::Project
 
     def zip
       FileUtils.rm_f(project_zip)
-      ZipFile.new(project_folder, project_zip).write
+      ZipFolder.zip(project_folder, project_zip)
     end
   end
 end
