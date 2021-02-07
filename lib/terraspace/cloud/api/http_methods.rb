@@ -28,7 +28,7 @@ class Terraspace::Cloud::Api
     end
 
     def set_headers!(req)
-      req['Authorization'] = token if token
+      req['Authorization'] = "Bearer #{token}" if token
       req['Content-Type'] = 'application/json'
     end
 
