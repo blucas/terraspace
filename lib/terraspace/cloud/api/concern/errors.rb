@@ -1,5 +1,14 @@
-class Terraspace::Cloud::AbstractBase
-  module Validations
+module Terraspace::Cloud::Api::Concern
+  module Errors
+    def errors?(result)
+      result.is_a?(Hash) && result.key?("errors")
+    end
+
+    def error_message(result)
+      $stderr.puts "ERROR: #{result["errors"]}"
+      $stderr.puts "Your current settings. org: #{@org} project: #{@project}"
+    end
+
     def valid?
       if @options[:type] == "stack_env" && !@options[:stack]
         puts "ERROR: When using --type stack_env, please specify the env. IE: --stack NAME"

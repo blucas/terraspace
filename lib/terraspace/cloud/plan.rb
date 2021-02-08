@@ -12,7 +12,7 @@ module Terraspace::Cloud
     end
 
     def start_plan(upload)
-      result = api.start_plan(upload_id: upload['uid'])
+      result = api.start_plan(upload_id: upload['id'])
       puts "start_plan result #{result}"
     end
   end

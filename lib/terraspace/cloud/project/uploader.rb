@@ -1,19 +1,18 @@
 module Terraspace::Cloud::Project
   class Uploader < Base
     attr_reader :record
-
     def upload(zip_path)
-      @record = create_record
+      @record = create_record # set @record for start_plan(uploader.record)
       upload_project(@record['url'], zip_path)
     end
 
     def create_record
-      record = api.create_upload
-      if errors?(record)
-        error_message(record)
+      result = api.create_upload
+      if errors?(result)
+        error_message(result)
         exit 1 # TODO: consider: raise exception can rescue higher up
       else
-        record
+        load_record(result)
       end
     end
 
