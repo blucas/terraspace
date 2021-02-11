@@ -5,8 +5,6 @@ module Terraspace::Cloud::Var
 
       $stderr.puts "Removing #{@options[:type]} level variables for #{@options[:org]}/#{@options[:project]}:"
       result = api.rm_var(@options)
-      return unless result # 500 error
-
       if errors?(result)
         error_message(result)
       else

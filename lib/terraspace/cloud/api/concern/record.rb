@@ -7,5 +7,12 @@ module Terraspace::Cloud::Api::Concern
       record.merge!(data['attributes'])
       record
     end
+
+    def load_records(result)
+      result['data'].map do |item|
+        record = { id: item['id'] }
+        record.merge(item['attributes'])
+      end
+    end
   end
 end

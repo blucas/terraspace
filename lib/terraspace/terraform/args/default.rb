@@ -23,7 +23,10 @@ module Terraspace::Terraform::Args
       args = auto_approve_arg
       var_files = @options[:var_files]
       if var_files
-        args << var_files.map { |f| "-var-file #{Dir.pwd}/#{f}" }.join(' ')
+        var_files.each do |file|
+          copy_to_cache(plan)
+        end
+        args << var_files.map { |f| "-var-file #{f}" }.join(' ')
       end
 
       args << input_option
@@ -31,17 +34,16 @@ module Terraspace::Terraform::Args
       # must be at the end
       plan = @options[:plan]
       if plan
-        if plan.starts_with?('/')
-          src  = plan
-          dest = src
-        else
-          src = "#{Dir.pwd}/#{plan}"
-          dest = "#{@mod.cache_dir}/#{File.basename(src)}"
-        end
-        FileUtils.cp(src, dest) unless same_file?(src, dest)
-        args << " #{dest}"
+        copy_to_cache(plan)
+        args << " #{plan}"
       end
       args
+    end
+
+    def copy_to_cache(file)
+      src = file
+      dest = "#{@mod.cache_dir}/#{File.basename(src)}"
+      FileUtils.cp(src, dest) unless same_file?(src, dest)
     end
 
     def input_option
@@ -90,8 +92,7 @@ module Terraspace::Terraform::Args
     end
 
     def expanded_out
-      out = @options[:out]
-      out.starts_with?('/') ? out : "#{Dir.pwd}/#{out}"
+      @options[:out]
     end
 
     def destroy_args

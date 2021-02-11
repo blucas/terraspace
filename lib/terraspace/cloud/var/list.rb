@@ -3,20 +3,19 @@ module Terraspace::Cloud::Var
     def run
       return unless valid?
 
-      $stderr.puts "Showing #{@options[:type]} level variables for #{@options[:org]}/#{@options[:project]}:"
-      vars = api.list_vars(@options)
-      return unless vars # 500 error
-
-      if errors?(vars)
-        error_message(vars)
+      $stderr.puts "Showing #{@options[:level]} level variables for #{@org}/#{@project}:"
+      result = api.list_vars(@options)
+      if errors?(result)
+        error_message(result)
       else
-        show_variables(vars)
+        show_variables(result)
       end
     end
 
-    def show_variables(vars)
+    def show_variables(result)
       presenter = CliFormat::Presenter.new(@options)
       presenter.header = %w[Name Value Kind Sensitive]
+      vars = load_records(result)
       vars.each do |var|
         row = [var['name'], var['value'], var['kind'], !!var['sensitive']]
         presenter.rows << row

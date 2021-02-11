@@ -10,8 +10,8 @@ module Terraspace::Cloud::Api::Concern
     end
 
     def valid?
-      if @options[:type] == "stack_env" && !@options[:stack]
-        puts "ERROR: When using --type stack_env, please specify the env. IE: --stack NAME"
+      if @options[:type] == "deployment" && !@options[:stack]
+        puts "ERROR: When using --type deployment, please specify the env. IE: --stack NAME"
         return false
       elsif @options[:type] == "stack" && !@options[:stack]
         puts "ERROR: When using --type stack, please specify the env. IE: --stack NAME"

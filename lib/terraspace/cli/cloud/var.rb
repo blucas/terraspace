@@ -5,17 +5,17 @@ class Terraspace::CLI::Cloud
 
     class_option :env, desc: "Env name. Overrides TS_ENV"
     class_option :sensitive, boolean: false, desc: "Whether or not the variable sensitive"
-    class_option :stack, desc: "Stack name. Only use when type is stack"
-    class_option :type, aliases: %w[t], default: "project", desc: "Variable type: stack_env, stack, env, project, or org"
+    class_option :stack, desc: "Stack name. Only use when level is stack"
+    class_option :level, aliases: %w[l], default: "deployment", desc: "Variable level: deployment, stack, env, project, or org"
 
     kind_option = Proc.new do
-      option :kind, aliases: %w[k], default: "terraform", desc: "Kind: environment or terraform"
+      option :kind, aliases: %w[k], default: "terraform", desc: "kind: environment or terraform"
     end
 
     desc "list", "List variables."
     long_desc Help.text("cloud:var:list")
     option :format, desc: "Output formats: #{CliFormat.formats.join(', ')}"
-    option :kind, aliases: %w[k], default: nil, desc: "Kind: environment or terraform"
+    kind_option.call
     def list
       Var::List.new(options).run
     end

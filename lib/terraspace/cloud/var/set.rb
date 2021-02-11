@@ -3,9 +3,8 @@ module Terraspace::Cloud::Var
     def run
       return unless valid?
 
-      $stderr.puts "Setting #{@options[:type]} level variables for #{@options[:org]}/#{@options[:project]}:"
+      $stderr.puts "Setting #{@options[:level]} level variable for #{@org}/#{@project}:"
       result = api.set_var(@options)
-      return unless result # 500 error
 
       if errors?(result)
         error_message(result)
@@ -15,14 +14,13 @@ module Terraspace::Cloud::Var
     end
 
     def show_result(result)
-      $stderr.puts "Variable #{@options[:name]} has been set"
-      view = case @options[:type]
+      record = load_record(result) # can use option for name, but using record so we know that we saved the right one
+      $stderr.puts "Variable #{record['name']} has been set"
+      view = case @options[:level]
       when "org", "project"
-        "terraspace cloud var list --type #{@options[:type]}"
-      when "env"
-        "terraspace cloud var list --type #{@options[:type]} --env=#{@options[:env]}"
-      when "stack", "stack_env"
-        "terraspace cloud var list --type #{@options[:type]} --stack=#{@options[:stack]}"
+        "terraspace cloud var list --level #{@options[:level]}"
+      when "stack", "deployment"
+        "terraspace cloud var list --level #{@options[:level]} --stack=#{@stack}"
       end
       $stderr.puts <<~EOL
         To view variable:
