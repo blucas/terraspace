@@ -10,7 +10,7 @@ module Terraspace
       option :format, desc: "output formats: json, text"
     }
     out_option = Proc.new {
-      option :out, aliases: :o, desc: "write the output to path"
+      option :out, aliases: :o, desc: "Write the output to path"
     }
     input_option = Proc.new {
       option :input, type: :boolean, desc: "Ask for input for variables if not directly set."
@@ -127,6 +127,7 @@ module Terraspace
     instance_option.call
     out_option.call
     reconfigure_option.call
+    option :copy_plan_to_root, type: :boolean, default: true, desc: "Copy plan file generated in the cache folder back to project root"
     def plan(mod)
       Commander.new("plan", options.merge(mod: mod)).run
     end

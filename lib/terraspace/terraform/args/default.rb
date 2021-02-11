@@ -40,12 +40,6 @@ module Terraspace::Terraform::Args
       args
     end
 
-    def copy_to_cache(file)
-      src = file
-      dest = "#{@mod.cache_dir}/#{File.basename(src)}"
-      FileUtils.cp(src, dest) unless same_file?(src, dest)
-    end
-
     def input_option
       option = if @options[:auto]
                  "false"
@@ -81,6 +75,8 @@ module Terraspace::Terraform::Args
       args << input_option
       args << "-destroy" if @options[:destroy]
       args << "-out #{expanded_out}" if @options[:out]
+      # Note: based on the @options[:out] will run an internal hook to copy plan
+      # file back up to the root project folder for use. Think this is convenient and expected behavior.
       args
     end
 
@@ -127,6 +123,14 @@ module Terraspace::Terraform::Args
   private
     def same_file?(src, dest)
       src == dest
+    end
+
+    def copy_to_cache(file)
+      name = file.sub("#{Terraspace.root}/",'')
+      src = name
+      dest = "#{@mod.cache_dir}/#{name}"
+      FileUtils.mkdir_p(File.dirname(dest))
+      FileUtils.cp(src, dest) unless same_file?(src, dest)
     end
   end
 end
