@@ -87,7 +87,11 @@ module Terraspace::Terraform::Args
     def show_args
       args = []
       args << " -json" if @options[:json]
-      args << " #{@options[:plan]}" if @options[:plan] # terraform show /path/to/plan
+      plan = @options[:plan]
+      if plan
+        copy_to_cache(@options[:plan])
+        args << " #{@options[:plan]}" # terraform show /path/to/plan
+      end
       args
     end
 
