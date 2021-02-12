@@ -6,6 +6,7 @@ module Terraspace::Terraform::Ihooks::After
     end
 
     def copy_to_root(file)
+      return if file =~ %r{^/} # not need to copy absolute path
       name = file.sub("#{Terraspace.root}/",'')
       src = "#{@mod.cache_dir}/#{name}"
       dest = name

@@ -126,6 +126,7 @@ module Terraspace::Terraform::Args
     end
 
     def copy_to_cache(file)
+      return if file =~ %r{^/} # not need to copy absolute path
       name = file.sub("#{Terraspace.root}/",'')
       src = name
       dest = "#{@mod.cache_dir}/#{name}"
