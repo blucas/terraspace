@@ -32,7 +32,7 @@ class Terraspace::CLI
     end
 
     def sync_cloud?
-       %w[apply plan destroy cloud-setup].include?(calling_command)
+       %w[apply down plan up].include?(calling_command)
     end
 
     # Currently only handles remote modules only one-level deep.
@@ -66,7 +66,7 @@ class Terraspace::CLI
 
     def auto_init?
       # terraspace commands not terraform commands. included some extra terraform commands here in case terrapace adds those later
-      commands = %w[up apply console destroy output plan providers refresh show validate state]
+      commands = %w[apply console down output plan providers refresh show state up validate]
       commands.include?(calling_command)
     end
 
