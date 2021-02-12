@@ -34,5 +34,9 @@ module Terraspace::Cloud
     def apply_plan(record)
       post("#{deployment_path}/applies", record)
     end
+
+    def create_cost_report(record)
+      post("#{deployment_path}/costs", record)
+    end
   end
 end

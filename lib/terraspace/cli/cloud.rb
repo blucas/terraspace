@@ -4,16 +4,20 @@ class Terraspace::CLI
     long_desc Help.text(:var)
     subcommand "var", Var
 
+    plan_option = Proc.new do
+      option :plan, required: true, desc: "plan id"
+    end
+
     desc "cost", "Runs cost on the cloud"
     long_desc Help.text("cloud/cost")
-    option :plan, required: true, desc: "plan id"
+    plan_option.call
     def cost(stack)
       Terraspace::Cloud::Cost.new(options.merge(stack: stack)).run
     end
 
     desc "apply", "Runs apply on the cloud"
     long_desc Help.text("cloud/apply")
-    option :plan, required: true, desc: "plan id"
+    plan_option.call
     def apply(stack)
       Terraspace::Cloud::Apply.new(options.merge(stack: stack)).run
     end
