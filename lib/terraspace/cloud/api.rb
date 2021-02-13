@@ -38,5 +38,9 @@ module Terraspace::Cloud
     def create_cost_report(record)
       post("#{deployment_path}/costs", record)
     end
+
+    def create_policy_check(record)
+      post("#{deployment_path}/policies", record)
+    end
   end
 end

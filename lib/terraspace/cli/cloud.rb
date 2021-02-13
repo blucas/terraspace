@@ -27,5 +27,12 @@ class Terraspace::CLI
     def plan(stack)
       Terraspace::Cloud::Plan.new(options.merge(stack: stack)).run
     end
+
+    desc "policy", "Runs policy on the cloud"
+    long_desc Help.text("cloud/policy")
+    plan_option.call
+    def policy(stack)
+      Terraspace::Cloud::Policy.new(options.merge(stack: stack)).run
+    end
   end
 end

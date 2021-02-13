@@ -127,7 +127,7 @@ module Terraspace
     instance_option.call
     out_option.call
     reconfigure_option.call
-    option :copy_plan_to_root, type: :boolean, default: true, desc: "Copy plan file generated in the cache folder back to project root"
+    option :copy_to_root, type: :boolean, default: true, desc: "Copy plan file generated in the cache folder back to project root"
     def plan(mod)
       Commander.new("plan", options.merge(mod: mod)).run
     end
